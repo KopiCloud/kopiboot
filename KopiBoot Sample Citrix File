@@ -34,7 +34,7 @@
 "Windows Firewall State":"Disable",
 "IE ESC State":"Disable",
 "Remote Desktop State":"Enable",
-"Chocolatey":"Enable"
+"Chocolatey State":"Enable"
 }
 
 "Post Setup 1" : { 
