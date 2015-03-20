@@ -1,0 +1,48 @@
+#KopiCloud KopiBoot File#
+#Create a Fully Unattended Active Directory Domain Controller on the Cloud# 
+
+"Administrator Account" : {
+"New Admin Password":"Passw0rd2014"
+}
+
+"DNS Config" : {
+"Preferred DNS Server":"127.0.0.1",
+}
+
+"Rename Machine" : {
+"New Machine Name":"kopidctemplate"
+}
+
+"Configure Windows Features" : {
+"Install Feature":"RSAT-AD-Tools",
+"Install Feature":"AD-Domain-Services",
+"Install Feature":"DNS",
+"Install Feature":"GPMC",
+"Windows Firewall State":"Disable",
+"IE ESC State":"Disable"
+}
+
+"Post Setup 1" : {
+"PowerShell Script" : "<PSScript>
+$safepswd=ConvertTo-SecureString "Passw0rd2014" -AsPlainText -Force\n
+$disk="D"\n
+Install-ADDSForest `
+-CreateDnsDelegation:$false `
+-DatabasePath {$disk}:\Windows\NTDS `
+-DomainMode "Win2012R2" `
+-DomainName "kopicloud.loc" `
+-DomainNetbiosName "kopicloud" `
+-ForestMode "Win2012R2" `
+-InstallDns:$true `
+-LogPath {$disk}:\Windows\NTDS `
+-NoRebootOnCompletion:$false `
+-SysvolPath {$disk}:\Windows\SYSVOL `
+-Force:$true `
+-SafeModeAdministratorPassword $safepswd</PSScript>"
+}
+
+"Post Setup 2" : {
+"PowerShell Script" : "<PSScript>Set-DnsServerPrimaryZone –Name “kopicloud.loc" –ReplicationScope "Forest"\n
+Add-DnsServerPrimaryZone -NetworkID "10.100.1.0/24" -ReplicationScope "Forest"
+</PSScript>"
+}
