@@ -1,0 +1,20 @@
+#KopiCloud KopiBoot File#
+#Use Public Chocolatey to Build a SQL Server 2012 Express Dev Server
+
+"Administrator Account":{ 
+"New Admin Password":"Passw0rd2014" 
+}
+
+"Rename Machine":{ 
+"New Machine Name":"kopisqldevtemplate" 
+}
+
+"Configure Windows Features":{
+"Windows Firewall State":"Disable"
+"IE ESC State":"Disable"
+"Chocolatey State":"Enable"
+}
+
+"Post Setup 1" : {
+"Chocolatey Package":"mssqlserver2012express"
+}
